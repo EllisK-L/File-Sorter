@@ -1,5 +1,9 @@
 import os, datetime, pathlib, shutil, sys
 
+def FileOperation(src, dest):
+    shutil.copyfile(src, dest)
+    shutil.copystat(src, dest)
+
 def Setup():
     input_dir = input("directory to sort(input): ")
     output_dir = input("output directory: ")
@@ -52,7 +56,7 @@ def SortFiles(input_dir, output_dir):
                     single_flag, all_flag = UserFileConflict(move_file)
                 if all_flag == "y" or single_flag == "y":
                     print("replacing file: "+move_file)
-                    shutil.copyfile(file_path, move_file)
+                    FileOperation(file_path, move_file)
                 if all_flag == "k" or single_flag == "k":
                     file_exists = True
                     i = 0
@@ -64,11 +68,11 @@ def SortFiles(input_dir, output_dir):
                             file_exists = False
                         i+=1
                     print("adding new file: "+new_file_name)
-                    shutil.copyfile(file_path, new_file_name)
+                    FileOperation(file_path, new_file_name)
                 if all_flag == "n" or single_flag == "n":
                     print("skipping file: "+file_path)
             else:
-                shutil.copyfile(file_path, move_file)
+                FileOperation(file_path, move_file)
 
             current_file_count +=1
             print(str(current_file_count) + "/"+str(total_file_count))
