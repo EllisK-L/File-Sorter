@@ -67,7 +67,8 @@ def SortFiles(input_dir, output_dir):
                     shutil.copyfile(file_path, new_file_name)
                 if all_flag == "n" or single_flag == "n":
                     print("skipping file: "+file_path)
-            shutil.copyfile(file_path, move_file)
+            else:
+                shutil.copyfile(file_path, move_file)
 
             current_file_count +=1
             print(str(current_file_count) + "/"+str(total_file_count))
