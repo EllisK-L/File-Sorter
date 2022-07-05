@@ -23,10 +23,21 @@ def UserFileConflict(file):
     return single_flag, all_flag
                     
 
+def GetTotalFiles(dir):
+    file_counter = 0
+    for subdir, dirs, files in os.walk(dir):
+        for file in files:
+            file_counter+=1
+    return file_counter
+
+
 def SortFiles(input_dir, output_dir):
     all_flag = "" # if the file already exists
 
+    print("indexing... " + input_dir)
+    total_file_count = GetTotalFiles(input_dir)
 
+    current_file_count = 0
     for subdir, dirs, files in os.walk(input_dir):
         for file in files:
             file_path = os.path.join(subdir, file)
@@ -56,6 +67,10 @@ def SortFiles(input_dir, output_dir):
                     shutil.copyfile(file_path, new_file_name)
                 if all_flag == "n" or single_flag == "n":
                     print("skipping file: "+file_path)
+            shutil.copyfile(file_path, move_file)
+
+            current_file_count +=1
+            print(str(current_file_count) + "/"+str(total_file_count))
 
 
 
